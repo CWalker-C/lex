@@ -50,7 +50,7 @@ int main(void)
     return 0;
 }
 
-void printCode(char* code)
+void printCode(char* code)  //打印代码至控制台
 {
     int i = 0;
     while (code[i] != EOF) {
@@ -58,7 +58,7 @@ void printCode(char* code)
     }
 }
 
-void filter(char* sourceCode)
+void filter(char* sourceCode)   //　过滤掉注释
 {
     int i = 0;
     char tempCode[10000];
@@ -92,13 +92,18 @@ void filter(char* sourceCode)
     strcpy(sourceCode, tempCode);
 }
 
-int isUnderLine(char ch)
+int isUnderLine(char ch)    //　判断是不是下划线
 {
     return (ch == '_');
 }
 
-int isLetter(char ch)
+int isLetter(char ch)   //　判断是不是字母
 {
     return ((ch >= 'a' && ch <= 'z') || 
             (ch >= 'A' && ch <= 'Z'));
+}
+
+int isDigit(char ch)  //　判断是不是数字
+{
+    return (ch >= '0' && ch <= '9');
 }

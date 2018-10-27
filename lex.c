@@ -57,6 +57,7 @@ int main(void)
     printf("\ncode after filter :\n");
     filter(sourceCode);
     printCode(sourceCode);
+    printf("\n");
 
     if ((fp = fopen("/home/zero/codes/princ2compile/compile.txt", "wr")) == NULL) {
         printf("open file\n");
@@ -82,11 +83,11 @@ int main(void)
             fprintf(fp, "（保留字，%s）\n", rwTab[ret]); 
         }
         else if (ret == 99) {
-            printf("常数%s）\n", token); 
+            printf("常数, %s）\n", token); 
             fprintf(fp, "（常数，%s）\n", token); 
         }
         else if (ret >= 33 && ret <= 68) {  // 操作符、界符
-            printf("操作符/界符%s）\n", oodTab[ret - 32]); 
+            printf("操作符/界符, %s）\n", oodTab[ret - 32]); 
             fprintf(fp, "（操作符/界符，%s）\n", oodTab[ret - 32]);
         } 
         else if (ret == 2000) {
@@ -199,11 +200,8 @@ int scanner(char* source, char* token, int* pCode)  // 扫描源代码
 {
     int flage = 0;  //　标志是否有下划线
     int k = 0;
-    // printf("%d\n", (*pCode));
-    // printf("\n");
     while (source[*pCode] == ' ' || source[*pCode] == '\n' || source[*pCode] == '\0')
         ++(*pCode);
-    // printf("%d\n", (*pCode));
     if (isLetter(source[*pCode]) || isUnderLine(source[*pCode])) {
         token[k++] = source[*pCode];        
         if (isUnderLine(source[(*pCode)++])) {
@@ -215,8 +213,8 @@ int scanner(char* source, char* token, int* pCode)  // 扫描源代码
             }
             token[k++] = source[*pCode];
             ++(*pCode);
-        }
-        token[k] = '\0';
+        }     
+        token[k] = '\0'; 
         if (!flage) {   // 可能是保留字
             int ret = findPosInrwTab(token);
             if (ret != -1) {    //　是保留字

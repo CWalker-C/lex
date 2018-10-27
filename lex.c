@@ -66,6 +66,7 @@ int main(void)
     pCode = 0;
     while (flag) {
         int ret = scanner(sourceCode, token, &pCode);
+        printf("%d\n", ret);
         if (ret == 100) {   // 标识符
             if (!isInIDTab(token)) {
                 if (count < 1000)
@@ -82,7 +83,7 @@ int main(void)
             printf("（保留字，%s）\n", rwTab[ret]); 
             fprintf(fp, "（保留字，%s）\n", rwTab[ret]); 
         }
-        else if (ret == 99) {
+        else if (ret == 99) {   //　常数
             printf("常数, %s）\n", token); 
             fprintf(fp, "（常数，%s）\n", token); 
         }
@@ -95,8 +96,7 @@ int main(void)
             flag = 0;
         }
         else {
-            // printf("error\n");
-            // printf("%d\n", ret);
+            printf("error\n");
             flag = 0;
         }
     }
@@ -198,24 +198,27 @@ int isInIDTab(char* s)  // 判断字符串s是否在标识符表中
 
 int scanner(char* source, char* token, int* pCode)  // 扫描源代码
 {
-    int flage = 0;  //　标志是否有下划线
+    int flag = 0;  //　标志是否有下划线
     int k = 0;
     while (source[*pCode] == ' ' || source[*pCode] == '\n' || source[*pCode] == '\0')
         ++(*pCode);
     if (isLetter(source[*pCode]) || isUnderLine(source[*pCode])) {
-        token[k++] = source[*pCode];        
+        token[k++] = source[*pCode];   
+        // printf("%c\n", source[*pCode]);       
         if (isUnderLine(source[(*pCode)++])) {
-            flage = 1;
-        }    
-        while (isDigit(source[*pCode]) || isLetter(source[*pCode] || isUnderLine(source[*pCode]))) {
+            flag = 1;
+        }   
+        // printf("%c\n", source[*pCode]);               
+        while (isDigit(source[*pCode]) || isLetter(source[*pCode]) || isUnderLine(source[*pCode])) {
             if (isUnderLine(source[*pCode])) {
-                flage = 1;
+                flag = 1;
             }
-            token[k++] = source[*pCode];
+            // printf("%c\n", source[*pCode]);       
+            token[k++] = source[*pCode];           
             ++(*pCode);
         }     
-        token[k] = '\0'; 
-        if (!flage) {   // 可能是保留字
+        token[k] = '\0';
+        if (!flag) {   // 可能是保留字
             int ret = findPosInrwTab(token);
             if (ret != -1) {    //　是保留字
                 return ret;

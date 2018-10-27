@@ -62,6 +62,7 @@ int main(void)
         printf("open file\n");
         exit(-1);
     }
+    pCode = 0;
     while (flag) {
         int ret = scanner(sourceCode, token, &pCode);
         if (ret == 100) {   // 标识符
@@ -198,13 +199,11 @@ int scanner(char* source, char* token, int* pCode)  // 扫描源代码
 {
     int flage = 0;  //　标志是否有下划线
     int k = 0;
-    printf("\n");
-    puts(source);
+    // printf("%d\n", (*pCode));
+    // printf("\n");
     while (source[*pCode] == ' ' || source[*pCode] == '\n' || source[*pCode] == '\0')
-        ++pCode;
-    printf("\n--------------");
-    printf("%d", (int)source[(*pCode)++]);
-    printf("--------------\n");
+        ++(*pCode);
+    // printf("%d\n", (*pCode));
     if (isLetter(source[*pCode]) || isUnderLine(source[*pCode])) {
         token[k++] = source[*pCode];        
         if (isUnderLine(source[(*pCode)++])) {
@@ -215,7 +214,7 @@ int scanner(char* source, char* token, int* pCode)  // 扫描源代码
                 flage = 1;
             }
             token[k++] = source[*pCode];
-            ++pCode;
+            ++(*pCode);
         }
         token[k] = '\0';
         if (!flage) {   // 可能是保留字
@@ -264,7 +263,7 @@ int scanner(char* source, char* token, int* pCode)  // 扫描源代码
             token[k] = '\0';
             return 37;
         }
-        ++pCode;
+        ++(*pCode);
         return -1;
     }
     else if (source[*pCode] == '>') {   
@@ -283,7 +282,7 @@ int scanner(char* source, char* token, int* pCode)  // 扫描源代码
             token[k] = '\0';
             return 39;
         }
-        ++pCode;
+        ++(*pCode);
         return -1;
     }
     else if (source[*pCode] == '=') {
@@ -297,7 +296,7 @@ int scanner(char* source, char* token, int* pCode)  // 扫描源代码
             token[k] = '\0';
             return 41;
         }
-        ++pCode;
+        ++(*pCode);
         return -1;
     }
     else if (source[*pCode] == '!') {

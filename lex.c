@@ -87,6 +87,15 @@ int main(void)
         else if (ret >= 33 && ret <= 68) {  // 操作符、界符
             printf("操作符/界符%s）\n", oodTab[ret - 32]); 
             fprintf(fp, "（操作符/界符，%s）\n", oodTab[ret - 32]);
+        } 
+        else if (ret == 2000) {
+            printf("complete~\n");
+            flag = 0;
+        }
+        else {
+            // printf("error\n");
+            // printf("%d\n", ret);
+            flag = 0;
         }
     }
     for (int i = 0; i < count; ++i) {
@@ -189,9 +198,13 @@ int scanner(char* source, char* token, int* pCode)  // 扫描源代码
 {
     int flage = 0;  //　标志是否有下划线
     int k = 0;
-
-    while (source[(*pCode)++] == ' ');
-    --pCode;
+    printf("\n");
+    puts(source);
+    while (source[*pCode] == ' ' || source[*pCode] == '\n' || source[*pCode] == '\0')
+        ++pCode;
+    printf("\n--------------");
+    printf("%d", (int)source[(*pCode)++]);
+    printf("--------------\n");
     if (isLetter(source[*pCode]) || isUnderLine(source[*pCode])) {
         token[k++] = source[*pCode];        
         if (isUnderLine(source[(*pCode)++])) {

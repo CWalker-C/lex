@@ -83,7 +83,7 @@ int main(void)
             fprintf(fp, "（保留字，%s）\n", rwTab[ret]); 
         }
         else if (ret == 99) {   //　常数
-            printf("常数, %s）\n", token); 
+            printf("(常数, %s）\n", token); 
             fprintf(fp, "（常数，%s）\n", token); 
         }
         else if (ret >= 33 && ret <= 68) {  // 操作符、界符
@@ -201,6 +201,9 @@ int scanner(char* source, char* token, int* pCode)  // 扫描源代码
     int k = 0;
     while (source[*pCode] == ' ' || source[*pCode] == '\n' || source[*pCode] == '\0')
         ++(*pCode);
+    if (source[*pCode] == '\\' && source[(*pCode) + 1] == 'n') {
+        *pCode += 2;
+    }
     if (isLetter(source[*pCode]) || isUnderLine(source[*pCode])) {
         token[k++] = source[*pCode];   
         // printf("%c\n", source[*pCode]);       

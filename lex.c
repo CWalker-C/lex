@@ -88,7 +88,7 @@ int main(void)
             fprintf(fp, "（常数，%s）\n", token); 
         }
         else if (ret >= 33 && ret <= 68) {  // 操作符、界符
-            printf("操作符/界符, %s）\n", oodTab[ret - 32]); 
+            printf("(操作符/界符, %s）\n", oodTab[ret - 32]); 
             fprintf(fp, "（操作符/界符，%s）\n", oodTab[ret - 32]);
         } 
         else if (ret == 2000) {

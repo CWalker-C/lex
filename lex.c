@@ -66,7 +66,6 @@ int main(void)
     pCode = 0;
     while (flag) {
         int ret = scanner(sourceCode, token, &pCode);
-        printf("%d\n", ret);
         if (ret == 100) {   // 标识符
             if (!isInIDTab(token)) {
                 if (count < 1000)
